@@ -14,7 +14,7 @@ In this lab we are going to see how to deploy a Kubernetes test cluster using [K
     apiVersion: kind.x-k8s.io/v1alpha4
     nodes:
     - role: control-plane
-      image: docker.io/kindest/node@sha256:69860bda5563ac81e3c0057d654b5253219618a22ec3a346306239bba8cfa1a6
+      image: docker.io/kindest/node@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1
       kubeadmConfigPatches:
       - |
         kind: InitConfiguration
@@ -29,7 +29,7 @@ In this lab we are going to see how to deploy a Kubernetes test cluster using [K
         hostPort: 443
         protocol: TCP
     - role: worker
-      image: docker.io/kindest/node@sha256:69860bda5563ac81e3c0057d654b5253219618a22ec3a346306239bba8cfa1a6
+      image: docker.io/kindest/node@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1
     EOF
     ~~~
 2. Copy the kubeconfig from root to your regular user
@@ -56,8 +56,8 @@ Now we have our Kubernetes test-cluster, but it's the first time that we interac
     kubectl get nodes
 
     NAME                         STATUS   ROLES                  AGE   VERSION
-    test-cluster-control-plane   Ready    control-plane,master   17m   v1.21.1
-    test-cluster-worker          Ready    <none>                 16m   v1.21.1
+    test-cluster-control-plane   Ready    control-plane,master   17m   v1.25.3
+    test-cluster-worker          Ready    <none>                 16m   v1.25.3
     ~~~
 2. We have namespaces. Namespaces provides a mechanism for isolating groups of resources within a single cluster. Names of resources need to be unique within a namespace, but not across namespaces. Namespace-based scoping is applicable only for namespaced objects (e.g. Deployments, Services, etc) and not for cluster-wide objects (e.g. StorageClass, Nodes, PersistentVolumes, etc).
 
