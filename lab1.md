@@ -230,7 +230,7 @@ If you remember, we talked about multi-container applications. In this case we a
         ports:
           - "8080:8080"
       mongo:
-        image: "docker.io/library/mongo:latest"
+        image: "docker.io/library/mongo:5.0"
         hostname: mongo
         restart: always
         environment:
