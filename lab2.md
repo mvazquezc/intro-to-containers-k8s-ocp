@@ -39,14 +39,14 @@ In this lab we are going to see how to deploy a Kubernetes test cluster using [K
     sudo cp /root/.kube/config ~/.kube/config
     sudo chmod 644 ~/.kube/config
     ~~~
-3. Deploy the NGINX Ingress Controller and wait for it rollout
+3. Deploy the NGINX Ingress Controller and wait for its rollout
 
     ~~~sh
     kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
     kubectl -n ingress-nginx rollout status deployment ingress-nginx-controller
     ~~~
 
-## First contanct with a Kubernetes
+## First contact with a Kubernetes cluster
 
 Now we have our Kubernetes test-cluster, but it's the first time that we interact with one, so let's get to know the basics.
 
@@ -191,7 +191,7 @@ We have the required manifests present in these folders, we will use Kubectl to 
         NAME                      READY   STATUS    RESTARTS   AGE
         pacman-57859c8df7-879kt   1/1     Running   0          27s
         ~~~
-3. Access the game in your Fedora35 node IP in port 80.
+3. Access the game in your Fedora node IP in port 80.
 4. If at some point we need more capacity on the frontend of our application we can scale the deployment, run the scale command and check how if you access the app the request is handled by different pods:
 
     1. Scale the deployment so we have 5 pods 
