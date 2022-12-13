@@ -1,6 +1,6 @@
 # Introduction to Containers / K8s / OpenShift
 
-The labs in this repo were tested in a Fedora 36 system with the following hardware and software versions:
+The labs in this repo were tested in a Fedora 37 system with the following hardware and software versions:
 
 Hardware:
 
