@@ -215,7 +215,7 @@ We have the required manifests present in these folders, we will use Kubectl to 
 
 ## Cleanup
 
-In order to delete the Kubernetes test cluster run below's command on the Fedora 35 system.
+In order to delete the Kubernetes test cluster run below's command on the Fedora system.
 
 ~~~sh
 sudo kind delete cluster --name test-cluster
