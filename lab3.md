@@ -23,12 +23,12 @@ In this lab we are going to see how a developer and an admin can access the Open
 1. Loged in the OpenShift Console as a developer click on `+Add`
 2. Under `Developer Catalog` click on `All services`
 3. Searc for `Go` and click on the `Go` builder image
-4. Click on `Create Application`
-5. Select `1.14.7-ubi8` as `Builder Image version`
+4. Click on `Create`
+5. Select `1.17-ubi8` as `Builder Image version`
 6. Add `https://github.com/mvazquezc/reverse-words.git` as the `Git Repo URL`
 7. Under `General` name the application.
 8. Under `Resources` make sure `Deployment` is selected
-9. Under `Advanced options` make sure `Create a route to the Application` is selected
+9. Under `Advanced options` make sure `Create a route` is selected
 10. Click on `Create`
 11. Back in the `Topology` view, click on the `Go` application
 12. Under `Build` you will see the application being built, feel free to check the logs
