@@ -129,8 +129,8 @@ We will be using the [Dockerfile format](https://docs.docker.com/engine/referenc
 
     ~~~sh
     cat <<EOF > /var/tmp/reversewords-containerfile
-    # Use golang:1.16 as base image since our app is programmed in go and targets this go release
-    FROM docker.io/library/golang:1.16
+    # Use golang:1.18 as base image since our app is programmed in go and targets this go release
+    FROM docker.io/library/golang:1.18
     # Set our working directory to /tmp/
     WORKDIR /tmp/
     # Clone the git repository with the application's code
