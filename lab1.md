@@ -12,25 +12,28 @@ In this lab we will run some containers and learn how we can expose services run
     ~~~sh
     podman run docker.io/library/hello-world:latest
     ~~~
+
 3. Containers can run in background, let's run an Apache server on background
 
     > **NOTE**: `-d` flag will detach the container (run in background), `--rm` flag will remove the container once it stops running.
-    
+
     ~~~sh
     podman run -d --rm docker.io/library/httpd:2.4
     ~~~
+
 4. We don't see any output, just the container ID, but we can verify that the container is running and also get the container logs:
 
     1. Get running containers
-        
+
         ~~~sh
         podman ps
 
         CONTAINER ID  IMAGE                        COMMAND           CREATED         STATUS             PORTS       NAMES
         b39be8e87a0b  docker.io/library/httpd:2.4  httpd-foreground  43 seconds ago  Up 43 seconds ago              magical_khorana
         ~~~
+
     2. Get container logs
-    
+
         > **NOTE**: The container got a random name assigned `magical_khorana` in the example above, you can specify a name when running the container that will make things easier when trying to interact with a specific container.
 
         ~~~sh
@@ -42,13 +45,15 @@ In this lab we will run some containers and learn how we can expose services run
         [Thu Dec 16 11:19:37.618618 2021] [mpm_event:notice] [pid 1:tid 140512215055680] AH00489: Apache/2.4.51 (Unix) configured -- resuming normal operations
         [Thu Dec 16 11:19:37.618745 2021] [core:notice] [pid 1:tid 140512215055680] AH00094: Command line: 'httpd -D FOREGROUND'
         ~~~
+
 5. We have an apache running, but how do we access it? - Well, we need to expose ports for that, let's stop the previous container and create a new one that exposes container port 80.
 
     1. Stop the previous container
-        
+
         ~~~sh
         podman kill b39be8e87a0b
         ~~~
+
     2. Run the new container
 
         > **NOTE**: `-p` flag is used to expose container ports to the local node. In this case we're exposing container's port 80 in host's port 8080
@@ -56,6 +61,7 @@ In this lab we will run some containers and learn how we can expose services run
         ~~~sh
         podman run -d --rm --name apache-container -p 8080:80 docker.io/library/httpd:2.4
         ~~~
+
     3. If we open our browser or we curl our node IP on port 8080 we will get to the apache server:
 
         ~~~sh
@@ -63,6 +69,7 @@ In this lab we will run some containers and learn how we can expose services run
 
         <html><body><h1>It works!</h1></body></html>
         ~~~
+
     4. We can stop the container
 
         ~~~sh
@@ -76,10 +83,11 @@ In this lab we will connect to a running container and check the processes runni
 1. Run a container based in ubuntu and change the entrypoint to `sleep infinity`
 
     > **NOTE**: Container images can define entrypoints that will be executed by default, in the example below we're overwritting the default entrypoint so the container runs the sleep command instead.
-    
+
     ~~~sh
     podman run -d --rm --entrypoint '["sleep", "infinity"]' --name ubuntu-container docker.io/library/ubuntu:22.04
     ~~~
+
 2. Let's connect to the container by running a shell inside it
 
     > **NOTE**: `-t` flag attaches a pseudo-tty and `-i` flag keeps stdin open.
@@ -87,6 +95,7 @@ In this lab we will connect to a running container and check the processes runni
     ~~~sh
     podman exec -ti ubuntu-container /bin/bash
     ~~~
+
 3. We're inside the container now, let's take a look at the file system, for example let's cat the os-release file:
 
     ~~~sh
@@ -97,6 +106,7 @@ In this lab we will connect to a running container and check the processes runni
     VERSION_ID="22.04"
     <output_omitted>
     ~~~
+
 4. As you can see the container filesystem is different than the host filesystem. What about processes, let's see how many processes are running in the container:
 
     ~~~sh
@@ -107,16 +117,19 @@ In this lab we will connect to a running container and check the processes runni
     root           4       0  0 11:57 pts/0    00:00:00 /bin/bash
     root          10       4  0 11:59 pts/0    00:00:00 ps -ef
     ~~~
+
 5. As we mentioned during the presentation, the container cannot see the processes running on the host, it only sees its own processes. We can exit the container:
 
     ~~~sh
     exit
     ~~~
+
 6. We can stop the container now
 
     ~~~sh
     podman kill ubuntu-container
     ~~~
+
 7. In the previous example we ran `sleep` as entrypoint but we can run other programs such a `bash` shell as well.
 
 ## Lab 3 - Building your very first container image
@@ -125,7 +138,7 @@ In the previous labs we have been using different images, in this case we are go
 
 We will be using the [Dockerfile format](https://docs.docker.com/engine/reference/builder/#format). In order to build and run our [test application](https://github.com/mvazquezc/reverse-words).
 
-1. Create the following Containerfile in your Fedora35 system
+1. Create the following Containerfile in your Fedora39 system
 
     ~~~sh
     cat <<EOF > /var/tmp/reversewords-containerfile
@@ -148,6 +161,7 @@ We will be using the [Dockerfile format](https://docs.docker.com/engine/referenc
     CMD ["/usr/bin/reverse-words"]
     EOF
     ~~~
+
 2. We can use podman to build our container image
 
     > **NOTE**: After a few moments we will get the image tagged locally as `localhost/reverse-words:latest`.
@@ -158,11 +172,13 @@ We will be using the [Dockerfile format](https://docs.docker.com/engine/referenc
     <omitted_output>
     Successfully tagged localhost/reverse-words:latest
     ~~~
+
 3. We can now run and access our application
 
     ~~~sh
     podman run -d --rm --name reverse-words -p 8080:8080 localhost/reverse-words:latest
     ~~~
+
 4. Our application exposes an API that reverses words, let's try it:
 
     ~~~sh
@@ -170,11 +186,13 @@ We will be using the [Dockerfile format](https://docs.docker.com/engine/referenc
 
     {"reverse_word":"!olleH"}
     ~~~
+
 5. We can stop the container now:
 
     ~~~sh
     podman kill reverse-words
     ~~~
+
 6. After testing our application we could push the container image to a container registry such as dockerhub or quay.io, in order to do that we need to tag our local image:
 
     > **NOTE**: Below example would tag our image so we can push it into quay.io under the `mavazque` account:
@@ -182,6 +200,7 @@ We will be using the [Dockerfile format](https://docs.docker.com/engine/referenc
     ~~~sh
     podman tag localhost/reverse-words:latest quay.io/mavazque/reverse-words:latest
     ~~~
+
 7. Now that the image is tagged we can check that we have that image tag localy:
 
     ~~~sh
@@ -191,6 +210,7 @@ We will be using the [Dockerfile format](https://docs.docker.com/engine/referenc
     quay.io/mavazque/reverse-words  latest      099d96771a3c  10 minutes ago  1.04 GB
     <omitted_output>
     ~~~
+
 8. We can now push the image:
 
     > **NOTE**: This step will fail since we are not authenticated in quay.io
@@ -206,7 +226,7 @@ We will be using the [Dockerfile format](https://docs.docker.com/engine/referenc
 
 If you remember, we talked about multi-container applications. In this case we are going to deploy a Pacman game that uses MongoDB to store player's highscores.
 
-1. Create the following docker-compose in your Fedora35 system
+1. Create the following docker-compose in your Fedora39 system
 
     ~~~sh
     cat <<EOF > /var/tmp/pacman-app.yaml
@@ -238,6 +258,7 @@ If you remember, we talked about multi-container applications. In this case we a
           MONGO_INITDB_ROOT_PASSWORD: password
     EOF
     ~~~
+
 2. We can start our Pacman app by running podman-compose that will read the application definition we created in the previous steps and will create the required containers.
 
     > **NOTE**: `-f` flag is used to specify a locations for the compose manifest. `-d` flag is used to detach from the container (run in background)
@@ -245,6 +266,7 @@ If you remember, we talked about multi-container applications. In this case we a
     ~~~sh
     podman-compose -f /var/tmp/pacman-app.yaml up -d
     ~~~
+
 3. We can access our Pacman game in our local server in port 8080. Open your favorite web-browser and go to [http://127.0.0.1:8080](http://127.0.0.1:8080).
 4. Once we're done playing our game we can power down the application stack:
 

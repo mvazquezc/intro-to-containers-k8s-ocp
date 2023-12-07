@@ -26,9 +26,9 @@ In this lab we are going to see how a developer and an admin can access the Open
 4. Under `General` name the application.
 5. Under `Advanced options` make sure `Create a route` is selected
 6. Click on `Create`
-12. Back in the `Topology` view, click on the `OpenShift` application
-13. Under `Build` you will see the application being built, feel free to check the logs
-14. Once the build is done, you can access your application using the `Route` under `Routes`
+7. Back in the `Topology` view, click on the `OpenShift` application
+8. Under `Build` you will see the application is being built, feel free to check the logs
+9. Once the build is done, you can access your application using the `Route` under `Routes`
 
 ## Admin Console
 
