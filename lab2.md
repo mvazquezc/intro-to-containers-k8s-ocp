@@ -40,6 +40,8 @@ In this lab we are going to see how to deploy a Kubernetes test cluster using [K
     mkdir -p ~/.kube/
     sudo cp /root/.kube/config ~/.kube/config
     sudo chmod 644 ~/.kube/config
+    userid=$UID; groupid=$GID;
+    sudo chown $userid:$groupid ~/.kube/config
     ~~~
 
 3. Deploy the NGINX Ingress Controller and wait for its rollout
