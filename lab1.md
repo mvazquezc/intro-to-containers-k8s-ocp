@@ -27,7 +27,9 @@ In this lab we will run some containers and learn how we can expose services run
 
         ~~~sh
         podman ps
+        ~~~
 
+        ~~~console
         CONTAINER ID  IMAGE                        COMMAND           CREATED         STATUS             PORTS       NAMES
         b39be8e87a0b  docker.io/library/httpd:2.4  httpd-foreground  43 seconds ago  Up 43 seconds ago              magical_khorana
         ~~~
@@ -39,7 +41,9 @@ In this lab we will run some containers and learn how we can expose services run
         ~~~sh
         # We can use the container id or the container name
         podman logs b39be8e87a0b
+        ~~~
 
+        ~~~console
         AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 10.88.0.3. Set the 'ServerName' directive globally to suppress this message
         AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 10.88.0.3. Set the 'ServerName' directive globally to suppress this message
         [Thu Dec 16 11:19:37.618618 2021] [mpm_event:notice] [pid 1:tid 140512215055680] AH00489: Apache/2.4.51 (Unix) configured -- resuming normal operations
@@ -142,8 +146,8 @@ We will be using the [Dockerfile format](https://docs.docker.com/engine/referenc
 
     ~~~sh
     cat <<EOF > /var/tmp/reversewords-containerfile
-    # Use golang:1.18 as base image since our app is programmed in go and targets this go release
-    FROM docker.io/library/golang:1.18
+    # Use golang:1.23 as base image since our app is programmed in go and targets this go release
+    FROM docker.io/library/golang:1.23
     # Set our working directory to /tmp/
     WORKDIR /tmp/
     # Clone the git repository with the application's code

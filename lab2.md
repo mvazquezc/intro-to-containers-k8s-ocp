@@ -15,7 +15,7 @@ In this lab we are going to see how to deploy a Kubernetes test cluster using [K
     apiVersion: kind.x-k8s.io/v1alpha4
     nodes:
     - role: control-plane
-      image: docker.io/kindest/node@sha256:b7a4cad12c197af3ba43202d3efe03246b3f0793f162afb40a33c923952d5b31
+      image: docker.io/kindest/node:v1.31.2@sha256:18fbefc20a7113353c7b75b5c869d7145a6abd6269154825872dc59c1329912e
       kubeadmConfigPatches:
       - |
         kind: InitConfiguration
@@ -30,7 +30,7 @@ In this lab we are going to see how to deploy a Kubernetes test cluster using [K
         hostPort: 443
         protocol: TCP
     - role: worker
-      image: docker.io/kindest/node@sha256:b7a4cad12c197af3ba43202d3efe03246b3f0793f162afb40a33c923952d5b31
+      image: docker.io/kindest/node:v1.31.2@sha256:18fbefc20a7113353c7b75b5c869d7145a6abd6269154825872dc59c1329912e
     EOF
     ~~~
 
@@ -40,8 +40,8 @@ In this lab we are going to see how to deploy a Kubernetes test cluster using [K
     mkdir -p ~/.kube/
     sudo cp /root/.kube/config ~/.kube/config
     sudo chmod 644 ~/.kube/config
-    userid=$UID; groupid=$GID;
-    sudo chown $userid:$groupid ~/.kube/config
+    USERID=$(id -u)
+    sudo chown ${USERID}:${USERID} ~/.kube/config
     ~~~
 
 3. Deploy the NGINX Ingress Controller and wait for its rollout
@@ -59,7 +59,9 @@ Now we have our Kubernetes test-cluster, but it's the first time that we interac
 
     ~~~sh
     kubectl get nodes
+    ~~~
 
+    ~~~console
     NAME                         STATUS   ROLES           AGE     VERSION
     test-cluster-control-plane   Ready    control-plane   2m56s   v1.28.0
     test-cluster-worker          Ready    <none>          2m31s   v1.28.0
@@ -69,7 +71,9 @@ Now we have our Kubernetes test-cluster, but it's the first time that we interac
 
     ~~~sh
     kubectl get namespaces
+    ~~~
 
+    ~~~console
     NAME                 STATUS   AGE
     default              Active   3m5s
     ingress-nginx        Active   2m29s
@@ -83,7 +87,9 @@ Now we have our Kubernetes test-cluster, but it's the first time that we interac
 
     ~~~sh
     kubectl get pods -A
+    ~~~
 
+    ~~~console
     NAMESPACE            NAME                                                 READY   STATUS      RESTARTS   AGE
     ingress-nginx        ingress-nginx-admission-create-226px                 0/1     Completed   0          3m27s
     ingress-nginx        ingress-nginx-admission-patch-kv47x                  0/1     Completed   1          3m27s
@@ -105,7 +111,9 @@ Now we have our Kubernetes test-cluster, but it's the first time that we interac
 
     ~~~sh
     kubectl get services -A
+    ~~~
 
+    ~~~console
     NAMESPACE       NAME                                 TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                      AGE
     default         kubernetes                           ClusterIP   10.96.0.1      <none>        443/TCP                      4m39s
     ingress-nginx   ingress-nginx-controller             NodePort    10.96.112.95   <none>        80:32707/TCP,443:32581/TCP   4m5s
@@ -113,7 +121,7 @@ Now we have our Kubernetes test-cluster, but it's the first time that we interac
     kube-system     kube-dns                             ClusterIP   10.96.0.10     <none>        53/UDP,53/TCP,9153/TCP       4m37s
     ~~~
 
-5. There are a lot more objects that we're not going to cover, these are the basics and you will get introduced to new objects as you go.
+5. There are a lot more objects that we're not going to cover, these are the basics, and you will get introduced to new objects as you go.
 
 ## Deploying test application
 
@@ -154,7 +162,9 @@ We have the required manifests present in these folders, we will use Kubectl to 
 
         ~~~sh
         kubectl -n pacman-game-mongo get pods
+        ~~~
 
+        ~~~console
         NAME                     READY   STATUS    RESTARTS   AGE
         mongo-545f984cb8-bfbss   1/1     Running   0          14s
         ~~~
@@ -213,7 +223,9 @@ We have the required manifests present in these folders, we will use Kubectl to 
 
         ~~~sh
         kubectl -n pacman-game-ui get pods
+        ~~~
 
+        ~~~console
         NAME                      READY   STATUS    RESTARTS   AGE
         pacman-57859c8df7-879kt   1/1     Running   0          27s
         ~~~
@@ -231,7 +243,9 @@ We have the required manifests present in these folders, we will use Kubectl to 
 
         ~~~sh
         kubectl -n pacman-game-ui get pods
+        ~~~
 
+        ~~~console
         NAME                      READY   STATUS    RESTARTS   AGE
         pacman-57859c8df7-879kt   1/1     Running   0          6m32s
         pacman-57859c8df7-9d7lf   1/1     Running   0          12s
