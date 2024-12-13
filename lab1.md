@@ -6,7 +6,7 @@ In this lab we are going to see how we can use Podman to run containers in our l
 
 In this lab we will run some containers and learn how we can expose services running in a container to our local system.
 
-1. Connect to the Fedora 35 system
+1. Connect to the Fedora 41 system
 2. Run a hello-world container
 
     ~~~sh
