@@ -106,7 +106,9 @@ In this lab we will connect to a running container and check the processes runni
 
     ~~~sh
     cat /etc/os-release
+    ~~~
 
+    ~~~output
     PRETTY_NAME="Ubuntu Jammy Jellyfish (development branch)"
     NAME="Ubuntu"
     VERSION_ID="22.04"
@@ -117,26 +119,28 @@ In this lab we will connect to a running container and check the processes runni
 
     ~~~sh
     ps -ef
+    ~~~
 
+    ~~~output
     UID          PID    PPID  C STIME TTY          TIME CMD
     root           1       0  0 11:55 ?        00:00:00 sleep infinity
     root           4       0  0 11:57 pts/0    00:00:00 /bin/bash
     root          10       4  0 11:59 pts/0    00:00:00 ps -ef
     ~~~
 
-5. As we mentioned during the presentation, the container cannot see the processes running on the host, it only sees its own processes. We can exit the container:
+6. As we mentioned during the presentation, the container cannot see the processes running on the host, it only sees its own processes. We can exit the container:
 
     ~~~sh
     exit
     ~~~
 
-6. We can stop the container now
+7. We can stop the container now
 
     ~~~sh
     podman kill ubuntu-container
     ~~~
 
-7. In the previous example we ran `sleep` as entrypoint but we can run other programs such a `bash` shell as well.
+8. In the previous example we ran `sleep` as entrypoint but we can run other programs such a `bash` shell as well.
 
 ## Lab 3 - Building your very first container image
 
@@ -174,7 +178,9 @@ We will be using the [Dockerfile format](https://docs.docker.com/engine/referenc
 
     ~~~sh
     podman build -f /var/tmp/reversewords-containerfile -t reverse-words:latest
+    ~~~
 
+    ~~~output
     <omitted_output>
     Successfully tagged localhost/reverse-words:latest
     ~~~
@@ -189,7 +195,9 @@ We will be using the [Dockerfile format](https://docs.docker.com/engine/referenc
 
     ~~~sh
     curl http://127.0.0.1:8080/ -X POST -d '{"word": "Hello!"}'
+    ~~~
 
+    ~~~output
     {"reverse_word":"!olleH"}
     ~~~
 
@@ -210,8 +218,10 @@ We will be using the [Dockerfile format](https://docs.docker.com/engine/referenc
 7. Now that the image is tagged we can check that we have that image tag localy:
 
     ~~~sh
-    podman images 
+    podman images
+    ~~~
 
+    ~~~output
     REPOSITORY                      TAG         IMAGE ID      CREATED         SIZE
     quay.io/mavazque/reverse-words  latest      099d96771a3c  10 minutes ago  1.04 GB
     <omitted_output>
@@ -223,7 +233,9 @@ We will be using the [Dockerfile format](https://docs.docker.com/engine/referenc
 
     ~~~sh
     podman push quay.io/mavazque/reverse-words:latest
+    ~~~
 
+    ~~~output
     <omitted_output>
     unauthorized: authentication required
     ~~~
