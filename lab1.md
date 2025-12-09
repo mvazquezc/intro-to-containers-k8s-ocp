@@ -70,7 +70,9 @@ In this lab we will run some containers and learn how we can expose services run
 
         ~~~sh
         curl http://127.0.0.1:8080/
-
+        ~~~
+  
+        ~~~output
         <html><body><h1>It works!</h1></body></html>
         ~~~
 
