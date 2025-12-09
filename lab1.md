@@ -251,7 +251,7 @@ If you remember, we talked about multi-container applications. In this case we a
     version: '3'
     services:
       pacman:
-        image: "quay.io/ifont/pacman-nodejs-app:latest"
+        image: "quay.io/mavazque/pacman:latest"
         depends_on:
           - "mongo"
         links:

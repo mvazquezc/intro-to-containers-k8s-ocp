@@ -47,9 +47,9 @@ Software:
     podman pull docker.io/library/httpd:2.4
     podman pull docker.io/library/ubuntu:22.04
     podman pull docker.io/golang:1.23
-    podman pull quay.io/ifont/pacman-nodejs-app:latest
+    podman pull quay.io/mavazque/pacman:latest
     podman pull docker.io/library/mongo:5.0
     sudo podman pull docker.io/kindest/node:v1.31.2@sha256:18fbefc20a7113353c7b75b5c869d7145a6abd6269154825872dc59c1329912e
-    sudo podman pull quay.io/ifont/pacman-nodejs-app:latest
+    sudo podman pull quay.io/mavazque/pacman:latest
     sudo podman pull docker.io/library/mongo:5.0
     ~~~
