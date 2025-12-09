@@ -15,7 +15,7 @@ In this lab we are going to see how to deploy a Kubernetes test cluster using [K
     apiVersion: kind.x-k8s.io/v1alpha4
     nodes:
     - role: control-plane
-      image: docker.io/kindest/node:v1.31.2@sha256:18fbefc20a7113353c7b75b5c869d7145a6abd6269154825872dc59c1329912e
+      image: docker.io/kindest/node:v1.34.0@sha256:7416a61b42b1662ca6ca89f02028ac133a309a2a30ba309614e8ec94d976dc5a
       kubeadmConfigPatches:
       - |
         kind: InitConfiguration
@@ -30,7 +30,7 @@ In this lab we are going to see how to deploy a Kubernetes test cluster using [K
         hostPort: 443
         protocol: TCP
     - role: worker
-      image: docker.io/kindest/node:v1.31.2@sha256:18fbefc20a7113353c7b75b5c869d7145a6abd6269154825872dc59c1329912e
+      image: docker.io/kindest/node:v1.34.0@sha256:7416a61b42b1662ca6ca89f02028ac133a309a2a30ba309614e8ec94d976dc5a
     EOF
     ~~~
 
