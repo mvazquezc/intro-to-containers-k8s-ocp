@@ -6,7 +6,7 @@ In this lab we are going to see how to deploy a Kubernetes test cluster using [K
 
 1. Create a test-cluster with Kind:
 
-    > **NOTE**: Below cluster definition do extra stuff, so we can deploy an ingress controller afterwards.
+    > **NOTE**: Cluster definition below does extra stuff, so we can deploy an ingress controller afterwards.
 
     ~~~sh
     cat <<EOF | sudo kind create cluster --config=-
@@ -16,12 +16,8 @@ In this lab we are going to see how to deploy a Kubernetes test cluster using [K
     nodes:
     - role: control-plane
       image: docker.io/kindest/node:v1.34.0@sha256:7416a61b42b1662ca6ca89f02028ac133a309a2a30ba309614e8ec94d976dc5a
-      kubeadmConfigPatches:
-      - |
-        kind: InitConfiguration
-        nodeRegistration:
-          kubeletExtraArgs:
-            node-labels: ingress-ready=true
+    - role: worker
+      image: docker.io/kindest/node:v1.34.0@sha256:7416a61b42b1662ca6ca89f02028ac133a309a2a30ba309614e8ec94d976dc5a
       extraPortMappings:
       - containerPort: 80
         hostPort: 80
@@ -29,8 +25,6 @@ In this lab we are going to see how to deploy a Kubernetes test cluster using [K
       - containerPort: 443
         hostPort: 443
         protocol: TCP
-    - role: worker
-      image: docker.io/kindest/node:v1.34.0@sha256:7416a61b42b1662ca6ca89f02028ac133a309a2a30ba309614e8ec94d976dc5a
     EOF
     ~~~
 
@@ -47,7 +41,8 @@ In this lab we are going to see how to deploy a Kubernetes test cluster using [K
 3. Deploy the NGINX Ingress Controller and wait for its rollout
 
     ~~~sh
-    kubectl -n ingress-nginx apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+    kubectl label node test-cluster-worker ingress-ready=true
+    kubectl -n ingress-nginx apply -f https://github.com/kubernetes/ingress-nginx/raw/refs/tags/controller-v1.13.5/deploy/static/provider/kind/deploy.yaml
     kubectl -n ingress-nginx rollout status deployment ingress-nginx-controller
     ~~~
 
