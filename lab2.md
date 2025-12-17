@@ -47,7 +47,7 @@ In this lab we are going to see how to deploy a Kubernetes test cluster using [K
 3. Deploy the NGINX Ingress Controller and wait for its rollout
 
     ~~~sh
-    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+    kubectl -n ingress-nginx apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
     kubectl -n ingress-nginx rollout status deployment ingress-nginx-controller
     ~~~
 
